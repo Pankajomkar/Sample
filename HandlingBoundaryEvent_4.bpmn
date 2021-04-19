@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_093axp6" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.7.0">
-  <bpmn:process id="HandlingBoundaryEvent_3" name="HandlingBoundaryEvent_3" isExecutable="true">
+  <bpmn:process id="HandlingBoundaryEvent_4" name="HandlingBoundaryEvent_4" isExecutable="true">
     <bpmn:startEvent id="Event_1ao4cev">
       <bpmn:outgoing>Flow_0zan2fs</bpmn:outgoing>
     </bpmn:startEvent>
@@ -15,9 +15,10 @@
         <bpmn:incoming>Flow_0aefw9p</bpmn:incoming>
         <bpmn:outgoing>Flow_1209s7b</bpmn:outgoing>
         <bpmn:outgoing>Flow_0l8layj</bpmn:outgoing>
+        <bpmn:outgoing>Flow_176nacs</bpmn:outgoing>
       </bpmn:exclusiveGateway>
       <bpmn:endEvent id="Event_1n6a1f1">
-        <bpmn:incoming>Flow_1o1ie82</bpmn:incoming>
+        <bpmn:incoming>Flow_0ygggkg</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:endEvent id="Event_1kso2ue">
         <bpmn:incoming>Flow_1209s7b</bpmn:incoming>
@@ -29,8 +30,8 @@
       <bpmn:userTask id="Activity_013l1od" name="User Input">
         <bpmn:extensionElements>
           <camunda:formData>
-            <camunda:formField id="FormField_1cvsv31" label="Name" type="string" />
-            <camunda:formField id="FormField_3ddilit" />
+            <camunda:formField id="name" label="name" type="string" />
+            <camunda:formField id="abc" label="abc" type="string" />
           </camunda:formData>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_01es04i</bpmn:incoming>
@@ -41,15 +42,15 @@
           <bpmn:outgoing>Flow_1h6ly86</bpmn:outgoing>
           <bpmn:errorEventDefinition id="ErrorEventDefinition_09idmh1" errorRef="Error_0jdqle9" />
         </bpmn:startEvent>
-        <bpmn:sequenceFlow id="Flow_1h6ly86" sourceRef="Event_0w84bxm" targetRef="finalCheck301" />
-        <bpmn:userTask id="finalCheck301" name="finalCheck301" camunda:assignee="demo">
+        <bpmn:sequenceFlow id="Flow_1h6ly86" sourceRef="Event_0w84bxm" targetRef="EmptyNameException" />
+        <bpmn:userTask id="EmptyNameException" name="EmptyNameException" camunda:assignee="demo">
           <bpmn:incoming>Flow_1h6ly86</bpmn:incoming>
           <bpmn:outgoing>Flow_1hel3yt</bpmn:outgoing>
         </bpmn:userTask>
         <bpmn:endEvent id="Event_1hcz21x">
           <bpmn:incoming>Flow_1hel3yt</bpmn:incoming>
         </bpmn:endEvent>
-        <bpmn:sequenceFlow id="Flow_1hel3yt" sourceRef="finalCheck301" targetRef="Event_1hcz21x" />
+        <bpmn:sequenceFlow id="Flow_1hel3yt" sourceRef="EmptyNameException" targetRef="Event_1hcz21x" />
       </bpmn:subProcess>
       <bpmn:subProcess id="Activity_0hfqazs" triggeredByEvent="true">
         <bpmn:startEvent id="Event_1jh8mv3">
@@ -71,43 +72,33 @@
           <bpmn:outgoing>Flow_10zfhrs</bpmn:outgoing>
           <bpmn:errorEventDefinition id="ErrorEventDefinition_0b4wj4d" errorRef="Error_0pnr8kj" />
         </bpmn:startEvent>
-        <bpmn:userTask id="Activity_1jldavk" name="finalCheck301" camunda:assignee="demo">
+        <bpmn:userTask id="NameSpacesException" name="NameSpacesException" camunda:assignee="demo">
           <bpmn:incoming>Flow_10zfhrs</bpmn:incoming>
           <bpmn:outgoing>Flow_0x3n3tt</bpmn:outgoing>
         </bpmn:userTask>
         <bpmn:endEvent id="Event_0sxxzk9">
           <bpmn:incoming>Flow_0x3n3tt</bpmn:incoming>
         </bpmn:endEvent>
-        <bpmn:sequenceFlow id="Flow_0x3n3tt" sourceRef="Activity_1jldavk" targetRef="Event_0sxxzk9" />
-        <bpmn:sequenceFlow id="Flow_10zfhrs" sourceRef="Event_0opho5y" targetRef="Activity_1jldavk" />
+        <bpmn:sequenceFlow id="Flow_0x3n3tt" sourceRef="NameSpacesException" targetRef="Event_0sxxzk9" />
+        <bpmn:sequenceFlow id="Flow_10zfhrs" sourceRef="Event_0opho5y" targetRef="NameSpacesException" />
       </bpmn:subProcess>
       <bpmn:sequenceFlow id="Flow_0aefw9p" sourceRef="Activity_013l1od" targetRef="Gateway_0fvg2wj" />
-      <bpmn:serviceTask id="Activity_1m3llwk" name="Java Delegate" camunda:class="com.wu.demo.CheckWeatherDelegate">
+      <bpmn:serviceTask id="Activity_1m3llwk" name="Java Delegate" camunda:class="com.dpoint.tutorial.delegates.CheckWeatherDelegate">
         <bpmn:incoming>Flow_0l8layj</bpmn:incoming>
         <bpmn:outgoing>Flow_0ygggkg</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:sequenceFlow id="Flow_0ygggkg" sourceRef="Activity_1m3llwk" targetRef="Activity_1r6mk41" />
-      <bpmn:sequenceFlow id="Flow_1o1ie82" sourceRef="Activity_1r6mk41" targetRef="Event_1n6a1f1" />
+      <bpmn:sequenceFlow id="Flow_0ygggkg" sourceRef="Activity_1m3llwk" targetRef="Event_1n6a1f1" />
       <bpmn:sequenceFlow id="Flow_0l8layj" sourceRef="Gateway_0fvg2wj" targetRef="Activity_1m3llwk">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${name!=" "}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:sequenceFlow id="Flow_01es04i" sourceRef="StartEvent_1" targetRef="Activity_013l1od" />
-      <bpmn:serviceTask id="Activity_1r6mk41" name="End event">
-        <bpmn:extensionElements>
-          <camunda:inputOutput>
-            <camunda:inputParameter name="Input_0qc39g6" />
-            <camunda:inputParameter name="Input_1ub49ia" />
-          </camunda:inputOutput>
-          <camunda:connector>
-            <camunda:inputOutput>
-              <camunda:inputParameter name="Input_1djr4b6" />
-            </camunda:inputOutput>
-            <camunda:connectorId>GET</camunda:connectorId>
-          </camunda:connector>
-        </bpmn:extensionElements>
-        <bpmn:incoming>Flow_0ygggkg</bpmn:incoming>
-        <bpmn:outgoing>Flow_1o1ie82</bpmn:outgoing>
-      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="Flow_176nacs" sourceRef="Gateway_0fvg2wj" targetRef="Event_0915smj">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${abc==" "}</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:endEvent id="Event_0915smj">
+        <bpmn:incoming>Flow_176nacs</bpmn:incoming>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_0o12xvw" errorRef="Error_0jdqle9" />
+      </bpmn:endEvent>
     </bpmn:subProcess>
     <bpmn:endEvent id="Event_0oyju8y">
       <bpmn:incoming>Flow_02b1kn2</bpmn:incoming>
@@ -134,7 +125,7 @@
   <bpmn:error id="Error_110qyal" name="Error_2" errorCode="type2error" />
   <bpmn:error id="Error_006s7g3" name="Error_2u804d3" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="HandlingBoundaryEvent_3">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="HandlingBoundaryEvent_4">
       <bpmndi:BPMNEdge id="Flow_1h35jaj_di" bpmnElement="Flow_1h35jaj">
         <di:waypoint x="720" y="910" />
         <di:waypoint x="782" y="910" />
@@ -166,13 +157,9 @@
         <di:waypoint x="755" y="170" />
         <di:waypoint x="830" y="170" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1o1ie82_di" bpmnElement="Flow_1o1ie82">
-        <di:waypoint x="1110" y="170" />
-        <di:waypoint x="1212" y="170" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ygggkg_di" bpmnElement="Flow_0ygggkg">
         <di:waypoint x="930" y="170" />
-        <di:waypoint x="1010" y="170" />
+        <di:waypoint x="1212" y="170" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0aefw9p_di" bpmnElement="Flow_0aefw9p">
         <di:waypoint x="600" y="170" />
@@ -182,6 +169,11 @@
         <di:waypoint x="730" y="145" />
         <di:waypoint x="730" y="110" />
         <di:waypoint x="762" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_176nacs_di" bpmnElement="Flow_176nacs">
+        <di:waypoint x="730" y="195" />
+        <di:waypoint x="730" y="230" />
+        <di:waypoint x="752" y="230" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="422" y="152" width="36" height="36" />
@@ -198,6 +190,9 @@
       <bpmndi:BPMNShape id="Activity_19pfi61_di" bpmnElement="Activity_013l1od">
         <dc:Bounds x="500" y="130" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1766ue2_di" bpmnElement="Event_0915smj">
+        <dc:Bounds x="752" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1csdz73_di" bpmnElement="Activity_0y0vek3" isExpanded="true">
         <dc:Bounds x="720" y="280" width="390" height="120" />
       </bpmndi:BPMNShape>
@@ -212,7 +207,7 @@
       <bpmndi:BPMNShape id="Event_1e6ndey_di" bpmnElement="Event_0w84bxm">
         <dc:Bounds x="742" y="322" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_083w1vc_di" bpmnElement="finalCheck301">
+      <bpmndi:BPMNShape id="Activity_083w1vc_di" bpmnElement="EmptyNameException">
         <dc:Bounds x="830" y="300" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1hcz21x_di" bpmnElement="Event_1hcz21x">
@@ -252,7 +247,7 @@
       <bpmndi:BPMNShape id="Event_0opho5y_di" bpmnElement="Event_0opho5y">
         <dc:Bounds x="742" y="652" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1jldavk_di" bpmnElement="Activity_1jldavk">
+      <bpmndi:BPMNShape id="Activity_1jldavk_di" bpmnElement="NameSpacesException">
         <dc:Bounds x="830" y="630" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0sxxzk9_di" bpmnElement="Event_0sxxzk9">
@@ -260,9 +255,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0yucfi7_di" bpmnElement="Activity_1m3llwk">
         <dc:Bounds x="830" y="130" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_13khan3_di" bpmnElement="Activity_1r6mk41">
-        <dc:Bounds x="1010" y="130" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0oyju8y_di" bpmnElement="Event_0oyju8y">
         <dc:Bounds x="1532" y="202" width="36" height="36" />
